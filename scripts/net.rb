@@ -7,33 +7,9 @@ Dir.chdir(cwd)
 
 ###
 
-def read_tls_wrap(strategy, dir, file, from, to)
-    lines = File.foreach(file)
-    key = ""
-    lines.with_index { |line, n|
-        next if n < from or n >= to
-        key << line.strip
-    }
-    key64 = [[key].pack("H*")].pack("m0")
-
-    return {
-        strategy: strategy,
-        key: {
-            dir: dir,
-            data: key64
-        }
-    }
-end
-
-###
-
 servers = File.foreach("../template/servers.csv")
-ca = File.read("../template/ca.crt")
-tls_wrap = read_tls_wrap("auth", 1, "../template/ta.key", 1, 17)
 
 cfg = {
-    ca: ca,
-    wrap: tls_wrap,
     ep: [
         "UDP:1194",
         "TCP:443"
@@ -41,6 +17,13 @@ cfg = {
     cipher: "AES-256-CBC",
     auth: "SHA512",
     frame: 1,
+    wrap: {
+        strategy: "auth",
+        key: {
+            dir: 1,
+            data: "" # dummy data to pass JSON validator
+        }
+    },
     ping: 15,
     reneg: 0,
     eku: true,
@@ -51,7 +34,11 @@ recommended = {
     id: "default",
     name: "Default",
     comment: "256-bit encryption",
-    cfg: cfg
+    cfg: cfg,
+    external: [
+        "ca": "${id}_nordvpn_com_ca.crt",
+        "wrap.key.data": "${id}_nordvpn_com_tls.key"
+    ]
 }
 presets = [recommended]
 
