@@ -1,0 +1,9 @@
+https://nordvpn.com/ovpn/
+
+All inline.
+
+Are OpenVPN credentials == web credentials? Need test account.
+
+Certificates/keys are per-host.
+
+https://downloads.nordcdn.com/configs/archives/certificates/servers.zip (9MB)
