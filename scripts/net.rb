@@ -35,10 +35,10 @@ recommended = {
     name: "Default",
     comment: "256-bit encryption",
     cfg: cfg,
-    external: [
+    external: {
         "ca": "${id}_nordvpn_com_ca.crt",
         "wrap.key.data": "${id}_nordvpn_com_tls.key"
-    ]
+    }
 }
 presets = [recommended]
 
