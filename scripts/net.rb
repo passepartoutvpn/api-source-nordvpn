@@ -54,16 +54,6 @@ pools = []
 servers.with_index { |line, n|
     id, country, area, num, hostname = line.strip.split(",")
 
-    addresses = nil
-    if ARGV.length > 0 && ARGV[0] == "noresolv"
-        addresses = []
-    else
-        addresses = Resolv.getaddresses(hostname)
-    end
-    addresses.map! { |a|
-        IPAddr.new(a).to_i
-    }
-
     pool = {
         :id => id,
         :name => "",
@@ -72,7 +62,6 @@ servers.with_index { |line, n|
     pool[:area] = area if !area.empty?
     pool[:num] = num
     pool[:hostname] = hostname
-    pool[:addrs] = addresses
     pools << pool
 }
 
