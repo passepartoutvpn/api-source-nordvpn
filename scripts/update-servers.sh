@@ -1,6 +1,5 @@
 #!/bin/bash
 URL="https://nordvpn.com/ovpn/"
-CERTS_URL="https://downloads.nordcdn.com/configs/archives/certificates/servers.zip"
 TPL="template"
 TMP="tmp"
 SERVERS_SRC="$TPL/servers.html"

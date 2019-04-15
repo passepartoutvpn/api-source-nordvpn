@@ -7,3 +7,5 @@ Are OpenVPN credentials == web credentials? Need test account.
 Certificates/keys are per-host.
 
 https://downloads.nordcdn.com/configs/archives/certificates/servers.zip (9MB)
+
+UPDATE: not anymore apparently, all servers share the same CA and TLS key.
