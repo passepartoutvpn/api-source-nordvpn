@@ -29,7 +29,7 @@ end
 
 servers = File.foreach("../template/servers.csv")
 ca = File.read("../template/ca.crt")
-tls_wrap = read_tls_wrap("auth", 1, "../template/ta.key", 1, 18)
+tls_wrap = read_tls_wrap("auth", 1, "../template/ta.key", 1, 17)
 
 cfg = {
     ca: ca,
