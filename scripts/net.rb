@@ -61,7 +61,7 @@ presets = [recommended]
 
 defaults = {
     :username => "user@mail.com",
-    :pool => "us1309",
+    :pool => "us",
     :preset => "default"
 }
 
