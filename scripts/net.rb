@@ -76,10 +76,10 @@ servers.with_index { |line, n|
             pool[:tags] = [secondary]
         else
             pool[:category] = "double"
-            pool[:extraCountries] = [secondary.upcase]
+            pool[:extra_countries] = [secondary.upcase]
         end
     end
-    pool[:num] = num
+    pool[:num] = num.to_i
     pool[:hostname] = hostname
     pools << pool
 }
