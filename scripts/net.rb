@@ -65,14 +65,20 @@ defaults = {
 
 pools = []
 servers.with_index { |line, n|
-    id, country, area, num, hostname = line.strip.split(",")
+    id, country, secondary, num, hostname = line.strip.split(",")
 
     pool = {
         :id => id,
-        :name => "",
         :country => country.upcase
     }
-    pool[:area] = area if !area.empty?
+    if !secondary.empty?
+        if secondary == "onion"
+            pool[:tags] = [secondary]
+        else
+            pool[:category] = "double"
+            pool[:extraCountries] = [secondary.upcase]
+        end
+    end
     pool[:num] = num
     pool[:hostname] = hostname
     pools << pool
