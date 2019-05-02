@@ -34,10 +34,6 @@ tls_wrap = read_tls_wrap("auth", 1, "../static/ta.key", 1, 17)
 cfg = {
     ca: ca,
     wrap: tls_wrap,
-    ep: [
-        "UDP:1194",
-        "TCP:443"
-    ],
     cipher: "AES-256-CBC",
     auth: "SHA512",
     frame: 1,
@@ -51,14 +47,27 @@ external = {
     hostname: "${id}.nordvpn.com"
 }
 
-recommended = {
+basic_cfg = cfg.dup
+basic_cfg["ep"] = ["UDP:1194", "TCP:443"]
+
+double_cfg = cfg.dup
+double_cfg["ep"] = ["TCP:443"]
+
+basic = {
     id: "default",
     name: "Default",
     comment: "256-bit encryption",
-    cfg: cfg,
+    cfg: basic_cfg,
     external: external
 }
-presets = [recommended]
+double = {
+    id: "double",
+    name: "Double VPN",
+    comment: "256-bit encryption",
+    cfg: double_cfg,
+    external: external
+}
+presets = [basic, double]
 
 defaults = {
     :username => "user@mail.com",
@@ -76,11 +85,13 @@ servers.with_index { |line, n|
         :id => id,
         :country => country.upcase
     }
+    pool[:presets] = ["default"]
     if !secondary.empty?
         if secondary == "onion"
             pool[:tags] = [secondary]
         else
             pool[:category] = "double"
+            pool[:presets] = ["double"]
             pool[:extra_countries] = [secondary.upcase]
         end
     end
